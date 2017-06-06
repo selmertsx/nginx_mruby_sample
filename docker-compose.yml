@@ -4,7 +4,6 @@ services:
     build:
       context: ./db
       dockerfile: Dockerfile
-    container_name: nginx_mruby_db_container
     image: nginx_mruby/db
     ports:
       - 33306:3306
@@ -12,8 +11,10 @@ services:
       - "MYSQL_ALLOW_EMPTY_PASSWORD=true"
 
   nginx_mruby_sample:
+    build:
+      context: ./mruby_docker
+      dockerfile: Dockerfile
     image: matsumotory/ngx-mruby
-    container_name: nginx_mruby_container
     volumes:
       - ./docker/conf:/usr/local/nginx/conf
       - ./docker/hook:/usr/local/nginx/hook
