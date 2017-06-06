@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nginx_mruby_sample:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: nginx_mruby_container
+    image: nginx_mruby/sample
+    volumes:
+      - ./docker/conf:/usr/local/nginx/conf
+      - ./docker/hook:/usr/local/nginx/hook
+    ports:
+      - 80:80
