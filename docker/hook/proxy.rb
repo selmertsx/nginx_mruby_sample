@@ -53,8 +53,10 @@ class ProxyMap
   end
 end
 
+request = Nginx::Request.new
+endpoint_id = request.var.endpoint_id
+
 proxymap = ProxyMap.new('sample')
-endpoint_id = 1
 url = proxymap.fetch_url(endpoint_id)
 
 if url.nil?
@@ -65,3 +67,4 @@ if url.nil?
 end
 
 Nginx.echo url
+request.set "proxy_pass", url
