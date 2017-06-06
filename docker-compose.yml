@@ -7,7 +7,7 @@ services:
     container_name: nginx_mruby_db_container
     image: nginx_mruby/db
     ports:
-      - 33306:3306
+      - 3306:3306
     environment:
       - "MYSQL_ALLOW_EMPTY_PASSWORD=true"
 
@@ -24,6 +24,6 @@ services:
       - 80:80
     links:
       - db
+    depends_on:
+      - db
 
-volumes:
-  db:
