@@ -15,7 +15,7 @@ services:
     build:
       context: ./mruby_docker
       dockerfile: Dockerfile
-    image: matsumotory/ngx-mruby
+    image: ngx_mruby/mysample
     container_name: nginx_mruby_container
     volumes:
       - ./docker/conf:/usr/local/nginx/conf

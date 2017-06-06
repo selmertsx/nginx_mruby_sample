@@ -44,8 +44,7 @@ MRuby::Build.new('host') do |conf|
   # conf.gem :github => 'matsumotory/mruby-discount'
 
   # use mysql on ngx_mruby
-  #conf.gem :github => 'mattn/mruby-mysql'
-
+  conf.gem :github => 'mattn/mruby-mysql'
   # have GeoIPCity.dat
   # conf.gem :github => 'matsumotory/mruby-geoip'
 
