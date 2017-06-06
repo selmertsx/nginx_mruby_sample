@@ -6,10 +6,10 @@ class MySQLProxy
     @database = database
   end
 
-  def select(query)
+  def find_by_id(id)
     rows = []
-    db.execute(query) { |row, fields| rows << row }
-    rows
+    db.execute("SELECT * FROM endpoints WHERE id = ?", id) { |row, fields| rows << row }
+    rows.first
   end
 
   def close
@@ -18,11 +18,15 @@ class MySQLProxy
 
   private
   def db
-    @db ||= MySQL::Database.new('db', 'root', '', 'information_schema')
+    @db ||= MySQL::Database.new(@host, @user, @password, @database)
+  end
+
+  def cache
+    @cache ||= Cache.new(namespace: 'sample', size_mb: 2)
   end
 end
 
-proxy = MySQLProxy.new('db', 'root', '', 'information_schema')
-rows = proxy.select("select * from TABLES")
+proxy = MySQLProxy.new('db', 'root', '', 'revieee_app_development')
+rows = proxy.find_by_id(1);
 Nginx.echo rows
 proxy.close
