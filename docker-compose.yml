@@ -4,6 +4,7 @@ services:
     build:
       context: ./db
       dockerfile: Dockerfile
+    container_name: nginx_mruby_db_container
     image: nginx_mruby/db
     ports:
       - 33306:3306
@@ -15,6 +16,7 @@ services:
       context: ./mruby_docker
       dockerfile: Dockerfile
     image: matsumotory/ngx-mruby
+    container_name: nginx_mruby_container
     volumes:
       - ./docker/conf:/usr/local/nginx/conf
       - ./docker/hook:/usr/local/nginx/hook
@@ -22,5 +24,6 @@ services:
       - 80:80
     links:
       - db
+
 volumes:
   db:
