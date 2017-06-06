@@ -6,10 +6,11 @@ class MySQLProxy
     @database = database
   end
 
-  def find_by_id(id)
-    rows = []
-    db.execute("SELECT * FROM endpoints WHERE id = ?", id) { |row, fields| rows << row }
-    rows.first
+  def find_proxy_url(endpoint_id)
+    row = find_by_id(endpoint_id)
+    return 'http://127.0.0.1' if row.nil?
+
+    "http://#{row[1]}:#{row[2]}"
   end
 
   def close
@@ -21,12 +22,46 @@ class MySQLProxy
     @db ||= MySQL::Database.new(@host, @user, @password, @database)
   end
 
-  def cache
-    @cache ||= Cache.new(namespace: 'sample', size_mb: 2)
+  def find_by_id(endpoint_id)
+    rows = []
+    db.execute("SELECT * FROM endpoints WHERE id = ?", endpoint_id) { |row, fields| rows << row }
+    rows.first
   end
 end
 
-proxy = MySQLProxy.new('db', 'root', '', 'revieee_app_development')
-rows = proxy.find_by_id(1);
-Nginx.echo rows
-proxy.close
+class ProxyMap
+  def initialize(namespace)
+    @namespace = namespace
+  end
+
+  def fetch_url(key)
+    cache[key.to_s]
+  end
+
+  def set_url(key, url)
+    cache[key.to_s] = url.to_s
+  end
+
+  def delete(key)
+    cache.delete(key.to_s)
+  end
+
+  private
+
+  def cache
+    @cache ||= Cache.new(namespace: @namespace, size_mb: 2)
+  end
+end
+
+proxymap = ProxyMap.new('sample')
+endpoint_id = 1
+url = proxymap.fetch_url(endpoint_id)
+
+if url.nil?
+  proxy = MySQLProxy.new('db', 'root', '', 'revieee_app_development')
+  url = proxy.find_proxy_url(endpoint_id)
+  proxymap.set_url(endpoint_id, url)
+  proxy.close
+end
+
+Nginx.echo url
