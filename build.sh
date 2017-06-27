@@ -84,11 +84,7 @@ fi
 echo "ngx_mruby configure ..."
 ./configure ${CONFIG_OPT} --with-ngx-src-root=${NGINX_SRC} --with-ngx-config-opt="${NGINX_CONFIG_OPT}" $@
 echo "ngx_mruby configure ... Done"
-
 echo "ngx_mruby building ..."
 $MAKE NUM_THREADS=$NUM_THREADS -j $NUM_THREADS
 echo "ngx_mruby building ... Done"
-
 echo "build.sh ... successful"
-
-#sudo make install
