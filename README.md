@@ -6,9 +6,12 @@ docker-compose up
 ```
 
 # 動作の確認
+
 ```
 curl http://127.0.0.1/mruby-cache
 curl http://127.0.0.1/mruby-cache-response
+curl http://127.0.0.1/mruby-test
+curl http://127.0.0.1/mruby-hello
 ```
 
 # 変更の反映
