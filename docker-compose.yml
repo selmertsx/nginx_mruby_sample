@@ -18,12 +18,11 @@ services:
     image: ngx_mruby/mysample
     container_name: nginx_mruby_container
     volumes:
-      - ./docker/conf:/usr/local/nginx/conf
-      - ./docker/hook:/usr/local/nginx/hook
+      - ./nginx/conf:/usr/local/nginx/conf
+      - ./nginx/hook:/usr/local/nginx/hook
     ports:
       - 80:80
     links:
       - db
     depends_on:
       - db
-
