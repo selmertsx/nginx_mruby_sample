@@ -17,9 +17,9 @@ RUN apt-get -y install make
 RUN apt-get -y install libpcre3 libpcre3-dev
 RUN apt-get -y install libmysqlclient-dev
 
-RUN cd /usr/local/src/ && git clone https://github.com/selmertsx/nginx_mruby_sample.git
+RUN cd /usr/local/src/ && git clone https://github.com/selmertsx/revieee_nginx_docker.git
 ENV NGINX_CONFIG_OPT_ENV --with-http_stub_status_module --with-http_ssl_module --prefix=/usr/local/nginx --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module
-RUN cd /usr/local/src/nginx_mruby_sample && sh build.sh && make install
+RUN cd /usr/local/src/revieee_nginx_docker && sh build.sh && make install
 
 EXPOSE 80
 EXPOSE 443
